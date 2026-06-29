@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peduli Banjir - Form Donasi</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome untuk Icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS untuk Desain Presisi -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        .bg-navy {
+            background-color: #0b1a30;
+            color: white;
+        }
+        .text-orange {
+            color: #f7941d;
+        }
+        .bg-orange {
+            background-color: #f7941d;
+        }
+        .btn-orange {
+            background-color: #f7941d;
+            color: white;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-orange:hover {
+            background-color: #e08316;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .footer-bottom {
+            background-color: #f7941d;
+            color: #0b1a30;
+            font-weight: 600;
+        }
+
+        /* Styling Khusus Card Form Donasi Sesuai Gambar Mockup */
+        .donation-box {
+            border: 1px solid #ced4da;
+            border-radius: 16px;
+            padding: 40px;
+            background-color: #ffffff;
+            max-width: 850px;
+            margin: 60px auto;
+        }
+        .form-title {
+            color: #0b1a30;
+            font-weight: bold;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .custom-input {
+            border-radius: 30px;
+            padding: 12px 25px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .custom-input:focus {
+            border-color: #f7941d;
+            box-shadow: 0 0 0 0.25rem rgba(247, 148, 29, 0.25);
+            outline: none;
+        }
+        
+        /* Metode Pembayaran Block Card */
+        .payment-section-title {
+            font-weight: bold;
+            color: #0b1a30;
+            font-size: 1.3rem;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .payment-card {
+            border: 1px solid #ced4da;
+            border-radius: 12px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: #ffffff;
+            user-select: none;
+        }
+        .payment-card:hover {
+            border-color: #f7941d;
+            background-color: #fffaf5;
+            transform: translateY(-2px);
+        }
+        .payment-card.active {
+            border-color: #f7941d;
+            background-color: #fff3e6;
+            box-shadow: 0 0 0 2px #f7941d;
+            color: #f7941d;
+        }
+        .payment-card .card-text {
+            font-weight: bold;
+            font-size: 1.15rem;
+            color: #0b1a30;
+        }
+        .payment-card.active .card-text {
+            color: #f7941d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER / NAVBAR (SAMA DENGAN INDEX) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="/">
+                <span class="text-orange me-2"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                <span>Peduli Banjir</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Berita</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. MAIN CONTENT: DONATION FORM -->
+    <main class="container">
+        <div class="donation-box shadow-sm">
+            <h2 class="form-title">Donasi Sekarang</h2>
+            
+            <!-- Mengirimkan data via POST ke controller backend -->
+            <form th:action="@{/donasi/kirim}" method="POST">
+                
+                <!-- Input 1: Nama Lengkap -->
+                <input type="text" class="custom-input" id="nama" name="nama" placeholder="Nama Lengkap" required>
+                
+                <!-- Input 2: Nomor Telepon -->
+                <input type="tel" class="custom-input" id="nomorTelepon" name="nomorTelepon" placeholder="Nomor Telepon (WhatsApp)" required>
+                
+                <!-- Input 3: Pilih Bencana (Dropdown Dinamis) -->
+                <select class="form-select custom-input" id="bencanaId" name="bencanaId" required>
+                    <option value="" disabled selected>Pilih Target Bencana Banjir</option>
+                    <!-- Mengambil daftar bencana dari model dan mencocokkan bencanaIdTerpilih secara otomatis -->
+                    <option th:each="bencana : ${daftarBencana}" 
+                            th:value="${bencana.id}" 
+                            th:text="${bencana.namaBencana} + ' (' + ${bencana.daerahTerdampak} + ')'"
+                            th:selected="${bencana.id == bencanaIdTerpilih}">
+                        Banjir Rendam 2 Kecamatan di Tanah Datar
+                    </option>
+                </select>
+                
+                <!-- Input 4: Nominal Donasi -->
+                <input type="number" class="custom-input" id="nominalDonasi" name="nominalDonasi" placeholder="Nominal Donasi (Rp)" min="10000" required>
+                
+                <!-- Bagian Metode Pembayaran -->
+                <h3 class="payment-section-title">Metode Pembayaran</h3>
+                
+                <!-- Input Tersembunyi untuk menyimpan metode pembayaran yang dipilih -->
+                <input type="hidden" id="metodePembayaran" name="metodePembayaran" required>
+                
+                <div class="row g-3 text-center mb-5">
+                    <!-- QRIS Card -->
+                    <div class="col-6 col-md-3">
+                        <div class="payment-card" onclick="selectPaymentMethod('QRIS', this)">
+                            <span class="card-text">QRIS</span>
+                        </div>
+                    </div>
+                    <!-- Bank Card -->
+                    <div class="col-6 col-md-3">
+                        <div class="payment-card" onclick="selectPaymentMethod('Bank', this)">
+                            <span class="card-text">Bank</span>
+                        </div>
+                    </div>
+                    <!-- Transfer Card -->
+                    <div class="col-6 col-md-3">
+                        <div class="payment-card" onclick="selectPaymentMethod('Transfer', this)">
+                            <span class="card-text">Transfer</span>
+                        </div>
+                    </div>
+                    <!-- E-Wallet Card -->
+                    <div class="col-6 col-md-3">
+                        <div class="payment-card" onclick="selectPaymentMethod('E-Wallet', this)">
+                            <span class="card-text">E-Wallet</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tombol Submit Form -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-orange px-5 py-3 rounded-pill shadow-sm fs-5">
+                        Donasi Sekarang
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+    </main>
+
+    <!-- 3. FOOTER (SAMA DENGAN INDEX) -->
+    <footer class="bg-navy text-white pt-5 pb-0">
+        <div class="container mb-4">
+            <div class="row g-4 justify-content-between">
+                <div class="col-lg-5">
+                    <h4 class="fw-bold text-orange mb-3 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart"></i> Peduli Banjir Indonesia
+                    </h4>
+                    <p class="text-white-50 small mb-0" style="line-height: 1.6;">
+                        Aplikasi sistem donasi online guna mempercepat penyaluran kebutuhan logistik dan medis korban terdampak bencana banjir di Indonesia secara transparan dan akuntabel.
+                    </p>
+                </div>
+                <div class="col-lg-5 text-lg-end">
+                    <p class="small mb-2"><i class="fa-solid fa-map-pin text-orange me-2"></i> Jl. Kenangan Raya No. 123, Semarang, Jawa Tengah</p>
+                    <p class="small mb-2"><i class="fa-solid fa-phone text-orange me-2"></i> 024-3456-7890 / 0812-1010-4202</p>
+                    <p class="small mb-0"><i class="fa-solid fa-envelope text-orange me-2"></i> pedulibanjir@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <!-- Bar Orange Paling Bawah -->
+        <div class="footer-bottom py-3 text-center">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center">
+                <span class="small d-flex align-items-center gap-1"><i class="fa-solid fa-hand-holding-heart"></i> Peduli Banjir</span>
+                <span class="small" style="font-size: 12px;">&copy; 2026 Peduli Banjir Indonesia. All Rights Reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script Interaktif Metode Pembayaran -->
+    <script>
+        function selectPaymentMethod(methodName, element) {
+            // Hapus kelas active dari semua kartu metode pembayaran
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Tambahkan kelas active ke kartu yang diklik
+            element.classList.add('active');
+            
+            // Masukkan nama metode ke input tersembunyi untuk dikirim ke Java
+            document.getElementById('metodePembayaran').value = methodName;
+        }
+    </script>
+</body>
+</html>

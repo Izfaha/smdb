@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peduli Banjir - Bersama Kita Bantu Korban Banjir</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome untuk Icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Animate.css untuk Animasi Cantik Modal -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <!-- Custom CSS untuk menyamakan Desain Presisi -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        .bg-navy {
+            background-color: #0b1a30;
+            color: white;
+        }
+        .text-orange {
+            color: #f7941d;
+        }
+        .bg-orange {
+            background-color: #f7941d;
+        }
+        .btn-orange {
+            background-color: #f7941d;
+            color: white;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-orange:hover {
+            background-color: #e08316;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .hero-section {
+            background: linear-gradient(rgba(11, 26, 48, 0.85), rgba(11, 26, 48, 0.9)), url('/images/foto-2.jpg') no-repeat center center/cover;
+            padding: 120px 0;
+        }
+        .stat-card {
+            border: 1px solid #eef2f5;
+            border-radius: 12px;
+            padding: 20px 15px;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .visi-misi-card {
+            border: 1px solid #eef2f5;
+            border-radius: 16px;
+            padding: 30px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0b1a30;
+            color: #ffffff;
+            margin: 0 auto 20px auto;
+        }
+        .icon-circle-misi {
+            background-color: #0b1a30;
+            color: #f7941d;
+        }
+        .berita-utama-img {
+            height: 320px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 12px;
+        }
+        .berita-mini-img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .footer-bottom {
+            background-color: #f7941d;
+            color: #0b1a30;
+            font-weight: 600;
+        }
+        .text-navy {
+            color: #0b1a30;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER / NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="#">
+                <span class="text-orange me-2"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                <span>Peduli Banjir</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item"><a class="nav-link active text-orange border-bottom border-warning border-2" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Berita</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <header class="hero-section text-white">
+        <div class="container py-5 text-start">
+            <div class="row">
+                <div class="col-lg-8">
+                    <p class="text-orange fw-bold text-uppercase tracking-wider mb-2">Banjir Melanda, Ribuan Keluarga Membutuhkan Bantuan</p>
+                    <h1 class="display-3 fw-bold mb-4" style="line-height: 1.1;">Bersama Kita <br> Bantu Korban Banjir</h1>
+                    <p class="fs-5 mb-5 opacity-90" style="max-width: 600px;">
+                        Setiap bantuan yang Anda berikan akan membantu menyediakan makanan, obat-obatan, dan kebutuhan penting bagi para korban terdampak banjir.
+                    </p>
+                    <a href="/donasi" class="btn btn-orange btn-lg px-5 py-3 rounded-pill d-inline-flex align-items-center gap-2 shadow">
+                        Donasi Sekarang <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. SIAPA KAMI & STATISTIK -->
+    <section class="container my-5 py-5">
+        <div class="row align-items-center">
+            <!-- Sisi Kiri: FOTO 1 (Aksi Relawan) -->
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <img th:src="@{/images/foto-1.jpg}" src="/images/foto-1.jpg" onerror="this.src='https://via.placeholder.com/500x370'" class="img-fluid rounded-4 shadow-lg w-100" alt="Aksi Penyaluran Bantuan Sembako">
+            </div>
+            <!-- Sisi Kanan: Deskripsi & Stat Grid -->
+            <div class="col-lg-7 ps-lg-5">
+                <h2 class="fw-bold fs-1 mb-3 text-navy">Siapa Kami?</h2>
+                <p class="text-muted fs-6 mb-3" style="text-align: justify; line-height: 1.7;">
+                    Peduli Banjir Indonesia adalah gerakan sosial yang bertujuan membantu masyarakat terdampak banjir melalui penggalangan dana dan penyaluran bantuan secara transparan dan tepat sasaran.
+                </p>
+                <p class="text-muted fs-6 mb-4" style="text-align: justify; line-height: 1.7;">
+                    Kami percaya bahwa kepedulian kecil dari banyak orang dapat memberikan dampak besar bagi mereka yang sedang menghadapi masalah.
+                </p>
+                
+                <!-- Grid Tiga Kotak Info Statik -->
+                <div class="row g-3">
+                    <div class="col-4">
+                        <div class="stat-card text-center">
+                            <span class="fs-2 text-orange mb-1 d-block"><i class="fa-solid fa-users"></i></span>
+                            <h3 class="fw-bold text-navy mb-0">2500+</h3>
+                            <p class="text-muted small mb-0">keluarga dibantu</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-card text-center">
+                            <span class="fs-2 text-orange mb-1 d-block"><i class="fa-solid fa-map-location-dot"></i></span>
+                            <h3 class="fw-bold text-navy mb-0">15</h3>
+                            <p class="text-muted small mb-0">Wilayah Terdampak</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-card text-center">
+                            <span class="fs-2 text-orange mb-1 d-block"><i class="fa-solid fa-hands-holding"></i></span>
+                            <h3 class="fw-bold text-navy mb-0">50+</h3>
+                            <p class="text-muted small mb-0">relawan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. VISI & MISI -->
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <h2 class="fw-bold fs-1 text-center mb-5 text-navy">Visi & Misi</h2>
+            <div class="row g-4 justify-content-center">
+                <!-- Visi Card -->
+                <div class="col-md-5">
+                    <div class="visi-misi-card text-center">
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-eye fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-3">Visi</h4>
+                        <p class="text-muted" style="line-height: 1.6;">Menjadi wadah kepedulian masyarakat Indonesia dalam membantu korban banjir secara cepat, transparan, dan berkelanjutan.</p>
+                    </div>
+                </div>
+                <!-- Misi Card -->
+                <div class="col-md-5">
+                    <div class="visi-misi-card">
+                        <div class="icon-circle icon-circle-misi">
+                            <i class="fa-solid fa-list-check fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold text-navy text-center mb-3">Misi</h4>
+                        <ul class="text-muted list-unstyled ps-3">
+                            <li class="mb-2"><i class="fa-solid fa-check text-orange me-2"></i> Menghimpun bantuan dari masyarakat</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-orange me-2"></i> Menyalurkan bantuan tepat sasaran</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-orange me-2"></i> Memberikan informasi kondisi lapangan secara terbuka</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-orange me-2"></i> Mengajak masyarakat untuk peduli terhadap sesama</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. BERITA SECTION -->
+    <section class="container my-5 py-5">
+        <h2 class="fw-bold fs-1 mb-5 text-navy text-center">Berita</h2>
+        
+        <!-- Berita Utama: FOTO 2 (Banjir Udara Gadang) -->
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img th:src="@{/images/foto-2.jpg}" src="/images/foto-2.jpg" onerror="this.src='https://via.placeholder.com/600x350'" class="img-fluid berita-utama-img" alt="Banjir Bandang di Tanah Datar">
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <p class="text-muted mb-2 small"><i class="fa-regular fa-calendar-days me-1"></i> 10 Juni 2026 - Sumatera Barat</p>
+                <h3 class="fw-bold text-navy mb-3 fs-2">Banjir Rendam 2 Kecamatan di Tanah Datar, Ratusan Warga Dievakuasi</h3>
+                <p class="text-muted mb-4" style="line-height: 1.7; text-align: justify;">
+                    Hujan deras terus mengguyur sejak semalam menyebabkan banjir di dua kecamatan di Kabupaten Tanah Datar. Ratusan warga terpaksa dievakuasi ke tempat yang lebih aman. Bantuan logistik darurat sangat dibutuhkan mendesak saat ini.
+                </p>
+                <a href="#" class="btn btn-outline-dark px-4 py-2 rounded-pill fw-semibold">Baca Selengkapnya</a>
+            </div>
+        </div>
+
+        <!-- Berita Terbaru Grid -->
+        <h4 class="fw-bold text-navy mb-4">Berita Terbaru</h4>
+        <div class="row g-4">
+            <!-- Card Berita Tambahan Kiri -->
+            <div class="col-md-6">
+                <div class="card border p-3 rounded-4" style="background-color: #fafbfc;">
+                    <div class="d-flex align-items-center gap-3">
+                        <img th:src="@{/images/foto-2.jpg}" src="/images/foto-2.jpg" onerror="this.src='https://via.placeholder.com/120x90'" class="berita-mini-img" alt="Banjir Tanah Datar">
+                        <div>
+                            <p class="text-muted mb-1 small" style="font-size: 11px;"><i class="fa-regular fa-calendar-days me-1"></i> 10 Juni 2026 - Sumatera Barat</p>
+                            <h6 class="fw-bold text-navy mb-0" style="font-size: 14px; line-height: 1.4;">Banjir Rendam 2 Kecamatan di Tanah Datar, Ratusan Warga Dievakuasi</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Berita Tambahan Kanan -->
+            <div class="col-md-6">
+                <div class="card border p-3 rounded-4" style="background-color: #fafbfc;">
+                    <div class="d-flex align-items-center gap-3">
+                        <img th:src="@{/images/foto-2.jpg}" src="/images/foto-2.jpg" onerror="this.src='https://via.placeholder.com/120x90'" class="berita-mini-img" alt="Banjir Tanah Datar">
+                        <div>
+                            <p class="text-muted mb-1 small" style="font-size: 11px;"><i class="fa-regular fa-calendar-days me-1"></i> 10 Juni 2026 - Sumatera Barat</p>
+                            <h6 class="fw-bold text-navy mb-0" style="font-size: 14px; line-height: 1.4;">Banjir Rendam 2 Kecamatan di Tanah Datar, Ratusan Warga Dievakuasi</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. MODAL NOTIFIKASI DONASI BERHASIL (INTERAKTIF) -->
+    <!-- STREAMING_CHUNK: Merender modal pop-up interaktif untuk notifikasi sukses -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="modal-body text-center p-5">
+                    <!-- Icon Centang Hijau Animasi -->
+                    <div class="text-success mb-4" style="font-size: 5.5rem;">
+                        <i class="fa-solid fa-circle-check animate__animated animate__bounceIn"></i>
+                    </div>
+                    <h3 class="fw-bold text-navy mb-2">Donasi Berhasil!</h3>
+                    <p class="text-muted mb-4 fs-6" style="line-height: 1.6;">
+                        Terima kasih <span class="fw-bold text-dark" th:text="${namaDonatur}">Donatur</span> atas kebaikan Anda sebesar <span class="fw-bold text-orange" th:text="'Rp ' + ${#numbers.formatDecimal(nominalDonasi, 0, 'POINT', 0, 'COMMA')}">Rp 50.000</span>. Bantuan Anda akan segera kami salurkan kepada para korban banjir.
+                    </p>
+                    <button type="button" class="btn btn-orange px-5 py-2.5 rounded-pill fw-semibold fs-6 shadow-sm" data-bs-dismiss="modal">
+                        Sama-sama
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-navy text-white pt-5 pb-0">
+        <div class="container mb-4">
+            <div class="row g-4 justify-content-between">
+                <div class="col-lg-5">
+                    <h4 class="fw-bold text-orange mb-3 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart"></i> Peduli Banjir Indonesia
+                    </h4>
+                    <p class="text-white-50 small mb-0" style="line-height: 1.6;">
+                        Aplikasi sistem donasi online guna mempercepat penyaluran kebutuhan logistik dan medis korban terdampak bencana banjir di Indonesia secara transparan dan akuntabel.
+                    </p>
+                </div>
+                <div class="col-lg-5 text-lg-end">
+                    <p class="small mb-2"><i class="fa-solid fa-map-pin text-orange me-2"></i> Jl. Kenangan Raya No. 123, Semarang, Jawa Tengah</p>
+                    <p class="small mb-2"><i class="fa-solid fa-phone text-orange me-2"></i> 024-3456-7890 / 0812-1010-4202</p>
+                    <p class="small mb-0"><i class="fa-solid fa-envelope text-orange me-2"></i> pedulibanjir@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <!-- Bar Orange Paling Bawah -->
+        <div class="footer-bottom py-3 text-center">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center">
+                <span class="small d-flex align-items-center gap-1"><i class="fa-solid fa-hand-holding-heart"></i> Peduli Banjir</span>
+                <span class="small" style="font-size: 12px;">&copy; 2026 Peduli Banjir Indonesia. All Rights Reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script Pendeteksi & Pemicu Modal Sukses -->
+    <!-- STREAMING_CHUNK: Mengaktifkan script JavaScript untuk memicu popup otomatis -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /* Membaca variabel 'sukses' yang dikirim melalui Thymeleaf model flash attribute */
+            /* Thymeleaf inlining mendeteksi jika sukses bernilai true */
+            const isSukses = /*[[${sukses}]]*/ false;
+            
+            if (isSukses === true) {
+                // Inisialisasi dan tampilkan Modal Bootstrap
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+            }
+        });
+    </script>
+</body>
+</html>

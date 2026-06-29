@@ -1,0 +1,35 @@
+services:
+  # Database PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_donasi
+    environment:
+      POSTGRES_USER: pbo_user
+      POSTGRES_PASSWORD: pbo_password
+      POSTGRES_DB: db_donasi_banjir
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pbo_user -d db_donasi_banjir"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Aplikasi Spring Boot (Backend + Thymeleaf)
+  app:
+    build: .
+    container_name: springboot_donasi_app
+    ports:
+      - "8084:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_donasi_banjir
+      - SPRING_DATASOURCE_USERNAME=pbo_user
+      - SPRING_DATASOURCE_PASSWORD=pbo_password
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
