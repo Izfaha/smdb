@@ -1,0 +1,62 @@
+services:
+  # Reverse Proxy (Front Gate)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    networks:
+      - backend_net
+    restart: always
+    depends_on:
+      - app
+
+  # Aplikasi Spring Boot (Backend + Thymeleaf)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot_donasi_app
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - JAVA_TOOL_OPTIONS=-XX:MaxRAMPercentage=75.0
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend_net
+    restart: always
+
+  # Database PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_donasi
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data:rw
+    networks:
+      - backend_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+networks:
+  backend_net:
+    internal: true # Shields all traffic inside Docker
+
+volumes:
+  pgdata:
+    driver: local
