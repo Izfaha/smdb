@@ -115,9 +115,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav gap-3">
                     <li class="nav-item"><a class="nav-link active text-orange border-bottom border-warning border-2" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Tentang</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Berita</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#berita">Berita</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
                 </ul>
             </div>
         </div>
@@ -150,7 +150,7 @@
             </div>
             <!-- Sisi Kanan: Deskripsi & Stat Grid -->
             <div class="col-lg-7 ps-lg-5">
-                <h2 class="fw-bold fs-1 mb-3 text-navy">Siapa Kami?</h2>
+                <h2 class="fw-bold fs-1 mb-3 text-navy" id="tentang">Siapa Kami?</h2>
                 <p class="text-muted fs-6 mb-3" style="text-align: justify; line-height: 1.7;">
                     Peduli Banjir Indonesia adalah gerakan sosial yang bertujuan membantu masyarakat terdampak banjir melalui penggalangan dana dan penyaluran bantuan secara transparan dan tepat sasaran.
                 </p>
@@ -222,7 +222,7 @@
 
     <!-- 5. BERITA SECTION -->
     <section class="container my-5 py-5">
-        <h2 class="fw-bold fs-1 mb-5 text-navy text-center">Berita</h2>
+        <h2 class="fw-bold fs-1 mb-5 text-navy text-center" id="berita">Berita</h2>
         
         <!-- Berita Utama: FOTO 2 (Banjir Udara Gadang) -->
         <div class="row align-items-center mb-5">
@@ -312,7 +312,7 @@
         </div>
         <!-- Bar Orange Paling Bawah -->
         <div class="footer-bottom py-3 text-center">
-            <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center" id="kontak">
                 <span class="small d-flex align-items-center gap-1"><i class="fa-solid fa-hand-holding-heart"></i> Peduli Banjir</span>
                 <span class="small" style="font-size: 12px;">&copy; 2026 Peduli Banjir Indonesia. All Rights Reserved.</span>
             </div>
@@ -337,5 +337,6 @@
             }
         });
     </script>
+    <div th:replace="~{fragments/chatbot :: chatbot-widget}"></div>
 </body>
 </html>
