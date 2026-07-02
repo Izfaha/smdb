@@ -27,6 +27,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_donasi_banjir
       - SPRING_DATASOURCE_USERNAME=pbo_user
       - SPRING_DATASOURCE_PASSWORD=pbo_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - GROQ_API_KEY=${GROQ_API_KEY}
     depends_on:
       db:
         condition: service_healthy
